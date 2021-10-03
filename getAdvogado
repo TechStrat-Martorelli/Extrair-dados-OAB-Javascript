@@ -1,0 +1,32 @@
+function getAdvogado(OAB) {
+  
+  let url = urlBase + OAB
+
+  const response = UrlFetchApp.fetch(url)
+  const respostaJSON = JSON.parse(response.getContentText())
+  console.log('Saldo: ' + respostaJSON.BalanceInCredits)
+  
+  let resultado = respostaJSON.Result.Advogado[0]
+  console.log(resultado)
+  
+  let dataHora = respostaJSON.DateString.slice(0,19)
+  let data = dataHora.split('T')[0]
+  let hora = dataHora.split('T')[1]
+
+  return [
+    [
+      data,
+      hora,
+      resultado.Nome,
+      resultado.TipoInscOab,
+      resultado.Inscricao,
+      resultado.Uf,
+      resultado.DadosAdicionais.Subsecao,
+      resultado.DadosAdicionais.EnderecoProfissional,
+      resultado.DadosAdicionais.TelefoneProfissional,
+      resultado.DadosAdicionais.Situacao,
+      resultado.DadosAdicionais.Foto
+    ]
+  ]
+}
+
