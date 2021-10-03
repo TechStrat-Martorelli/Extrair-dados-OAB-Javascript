@@ -1,0 +1,29 @@
+function salvarFoto(nome, fotoBase64){
+
+  let decodedString = Utilities.base64Decode(fotoBase64, Utilities.Charset.UTF_8);
+  
+  let nomeArquivo = '0'.repeat(6-nome.toString().length) + nome
+
+  console.log(nomeArquivo)
+
+  let myBlob = Utilities.newBlob(decodedString, "image/jpeg", nomeArquivo + '.jpg')
+
+  let dir = DriveApp.getFolderById("10oRao6f5TanqH9nm67GzgrEMdaj3gQsC");
+  let file = dir.createFile(myBlob);
+  return file.getUrl()
+
+}
+
+function Fotos(){
+  let planilha = SpreadsheetApp.getActive().getSheetByName('Resultados')
+
+  let priLinha = getLastRowSpecial(planilha.getRange('M:M').getValues())+1
+  let ultLinha = planilha.getLastRow()
+  
+  for(let linha = priLinha; linha <= ultLinha; linha++){
+    let nome = planilha.getRange(linha,6).getValue()
+    let fotoBase64 = planilha.getRange(linha,12).getValue()
+    if(fotoBase64 != '') planilha.getRange(linha,13).setValue(salvarFoto(nome, fotoBase64))
+  }
+  
+}
