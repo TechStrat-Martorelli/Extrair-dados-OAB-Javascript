@@ -1,3 +1,14 @@
+const token = MEU_TOKEN
+const urlAPI = 'https://api.exato.digital/oab/cadastro-nacional-advogados'
+const seccional = MINHA_UF // Ex.: DF
+const urlBase = `${urlAPI}?token=${token}&Seccional=${seccional}&consultar_detalhes=true&format=json&RetornarFoto=true&numero_inscricao=`
+
+//Essa pesquisa retorna os mesmo dados que esse site, mas sem precisar passar pelo captcha
+//https://cna.oab.org.br/
+
+//Documentação da API
+//https://api.exato.digital/json/metadata?op=CadastroNacionalAdvogados
+
 function getAdvogado(OAB) {
   
   let url = urlBase + OAB
